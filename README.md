@@ -34,6 +34,10 @@ Welcome to **Buyzo**! This is a starter project designed for learning modern ful
 
 ## 🎓 Intentional "Gaps" for Learning
 
+### 📝 JavaScript Internship Assignment
+We have a dedicated module for JavaScript core concepts (Hoisting, Closures, Event Loop, etc.).
+👉 **[Open Assignment Instructions](./JAVASCRIPT_ASSIGNMENT.md)**
+
 This boilerplate has several areas that are **intentionally unoptimized** or incomplete. Your goal in future lessons will be to fix these:
 
 ### 1. Search Debouncing (Frontend)

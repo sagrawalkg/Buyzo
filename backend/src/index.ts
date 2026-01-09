@@ -1,9 +1,19 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import { products } from './data/products';
+import { checkDiscount } from './utils/hoistingAssignment';
+import { runRefactored, runLegacy } from './utils/asyncAssignment';
 
 const app = express();
 const port = 5001;
+
+// --- ASSIGNMENT EXECUTION ---
+// See assignment instructions: ../../JAVASCRIPT_ASSIGNMENT.md
+// Uncomment these to check your work
+// checkDiscount();
+// runLegacy();
+// runRefactored();
+// -----------------------------
 
 app.use(cors());
 app.use(express.json());
