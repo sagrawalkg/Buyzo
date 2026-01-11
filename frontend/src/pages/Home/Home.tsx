@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import styles from './Home.module.css';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import styles from "./Home.module.css";
 
 interface Product {
   id: number;
@@ -10,13 +10,40 @@ interface Product {
   category: string;
 }
 
-const CATEGORIES = ['All', 'Electronics', 'Clothing', 'Home & Garden', 'Books', 'Sports'];
+const CATEGORIES = [
+  "All",
+  "Electronics",
+  "Clothing",
+  "Home & Garden",
+  "Books",
+  "Sports",
+];
+
+// --- DEBOUNCE ASSIGNMENT ---
+// TODO: Implement this utility
+// const debounce = (func: Function, delay: number) => {
+//   // AUTO-COMPLETE THIS PART:
+//   return (...args: any[]) => {};
+// };
+// const debouncedLog = debounce((val: string) => console.log("Debounced Search:", val), 500);
+// ---------------------------
 
 export const Home: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
   const [loading, setLoading] = useState(true);
+
+  // --- DEBOUNCE USAGE ---
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+    console.log("Normal Search:", value); // Intentional inefficient log
+
+    // TODO: Uncomment this to see the debounced search
+    // debouncedLog(value);
+  };
+  // ----------------------
 
   useEffect(() => {
     fetchProducts();
@@ -26,23 +53,20 @@ export const Home: React.FC = () => {
     setLoading(true);
     try {
       const queryParams = new URLSearchParams();
-      if (searchTerm) queryParams.append('q', searchTerm);
-      if (selectedCategory && selectedCategory !== 'All') queryParams.append('category', selectedCategory);
+      if (searchTerm) queryParams.append("q", searchTerm);
+      if (selectedCategory && selectedCategory !== "All")
+        queryParams.append("category", selectedCategory);
 
-      const response = await fetch(`http://localhost:5001/api/products?${queryParams.toString()}`);
+      const response = await fetch(
+        `http://localhost:5001/api/products?${queryParams.toString()}`
+      );
       const data = await response.json();
       setProducts(data);
     } catch (error) {
-      console.error('Failed to fetch products:', error);
+      console.error("Failed to fetch products:", error);
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setSearchTerm(value);
-    console.log('Searching for:', value); // Intentional inefficient log
   };
 
   return (
@@ -52,10 +76,12 @@ export const Home: React.FC = () => {
         <div className={styles.filterSection}>
           <h3 className={styles.filterTitle}>Categories</h3>
           <div className={styles.categoryList}>
-            {CATEGORIES.map(category => (
+            {CATEGORIES.map((category) => (
               <button
                 key={category}
-                className={`${styles.categoryBtn} ${selectedCategory === category ? styles.active : ''}`}
+                className={`${styles.categoryBtn} ${
+                  selectedCategory === category ? styles.active : ""
+                }`}
                 onClick={() => setSelectedCategory(category)}
               >
                 {category}
@@ -93,8 +119,15 @@ export const Home: React.FC = () => {
               <div key={product.id} className={`${styles.productCard} fade-in`}>
                 <Link to={`/product/${product.id}`} className={styles.cardLink}>
                   <div className={styles.imageWrapper}>
-                    <img src={product.image} alt={product.name} className={styles.productImage} loading="lazy" />
-                    <span className={styles.categoryTag}>{product.category}</span>
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className={styles.productImage}
+                      loading="lazy"
+                    />
+                    <span className={styles.categoryTag}>
+                      {product.category}
+                    </span>
                   </div>
                   <div className={styles.productInfo}>
                     <h3 className={styles.productName}>{product.name}</h3>
@@ -108,13 +141,16 @@ export const Home: React.FC = () => {
             ))}
           </div>
         )}
-        
+
         {!loading && products.length === 0 && (
           <div className={styles.emptyState}>
             <p>No products found matching your criteria.</p>
-            <button 
+            <button
               className="btn-primary"
-              onClick={() => { setSearchTerm(''); setSelectedCategory('All'); }}
+              onClick={() => {
+                setSearchTerm("");
+                setSelectedCategory("All");
+              }}
             >
               Clear Filters
             </button>

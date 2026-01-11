@@ -19,26 +19,21 @@ interface CartContextType {
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
+  // --- CLOSURE ASSIGNMENT ---
+  // TODO: Implement this closure to track actions without using React state
+  const createActionTracker = () => {
+    return (actionName: string) => {
+      // AUTO-COMPLETE THIS PART
+    };
+  };
+
+  const trackAction = createActionTracker();
+
 export const CartProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
-
-  // --- CLOSURE ASSIGNMENT ---
-  // TODO: Implement this closure to track actions without using React state
-  const createActionTracker = () => {
-    let count = 0; // Private variable
-
-    return (actionName: string) => {
-      // AUTO-COMPLETE THIS PART:
-      // 1. Increment count
-      // 2. Log: `Action ${count}: ${actionName}`
-    };
-  };
-
-  const trackAction = createActionTracker();
-  // --------------------------
 
   const addToCart = (product: any) => {
     trackAction("Added to Cart"); // Usage
