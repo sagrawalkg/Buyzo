@@ -3,6 +3,7 @@ import cors from 'cors';
 import { products } from './data/products';
 import { checkDiscount } from './utils/hoistingAssignment';
 import { runRefactored, runLegacy } from './utils/asyncAssignment';
+import { runArrayAnalysis } from './utils/arrayAssignment';
 
 const app = express();
 const port = 5001;
@@ -13,6 +14,7 @@ const port = 5001;
 // checkDiscount();
 // runLegacy();
 // runRefactored();
+// runArrayAnalysis(products);
 // -----------------------------
 
 app.use(cors());

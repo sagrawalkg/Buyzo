@@ -72,4 +72,18 @@ Welcome to the Buyzo JavaScript Internship Assignment! This assignment focuses o
 
 ---
 
+## Module 7: Array Methods (Backend)
+**File:** [backend/src/utils/arrayAssignment.ts](./backend/src/utils/arrayAssignment.ts)
+
+1. Open [backend/src/index.ts](./backend/src/index.ts) and uncomment `// runArrayAnalysis();`.
+2. Go to [backend/src/utils/arrayAssignment.ts](./backend/src/utils/arrayAssignment.ts).
+3. **Task:** Implement `analyzeProducts`:
+   - It receives the full `products` array.
+   - **Filter** for products in the "Electronics" category.
+   - **Sort** them by price in descending order.
+   - **Map** to return only the names of the top 3 most expensive products.
+4. Verify the output in your terminal matches the expected result.
+
+---
+
 All the best!!
