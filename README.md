@@ -66,4 +66,62 @@ logger.on("log", () => {
 logger.log("Server started");
 logger.log("User logged in");
 
+
+### Day 2 Assignment
+- 
+- Products API Improvements
+
+ Add pagination support to GET /api/products
+ Accept query params:
+page
+limit
+
+ Apply pagination after search and category filtering
+ Return response in the format:
+
+{
+  "data": [],
+  "page": 1,
+  "limit": 20,
+  "totalItems": 1000,
+  "totalPages": 50
+}
+ Provide default values for pagination params
+ Handle invalid query params gracefully
+
+- User & Auth Setup
+
+ Create in-memory users store
+ Add POST /api/auth/register
+ Hash passwords using bcrypt
+ Add POST /api/auth/login
+ Generate JWT on successful login
+ Store JWT secret in .env
+
+Auth Middleware
+
+ Create JWT authentication middleware
+ Extract user from token
+ Return 401 for invalid or missing token
+
+Route Protection
+
+ Protect POST /api/orders
+ Protect POST /api/payments
+
+- Order Status Management
+
+ Add status field to orders:
+
+PROCESSING
+PAID
+SHIPPED
+DELIVERED
+ Set default status on order creation
+ Add endpoint:
+
+PATCH /api/orders/:id/status
+
+ Validate allowed status transitions
+ Prevent invalid status updates
 Happy coding! 🚀
