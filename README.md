@@ -67,18 +67,46 @@ logger.log("Server started");
 logger.log("User logged in");
 
 
-### Day 2 Assignment
-- 
-- Products API Improvements
+# Day 2 Assignment – Backend Enhancements
 
- Add pagination support to GET /api/products
- Accept query params:
-page
-limit
+This assignment focuses on improving an existing backend application by adding pagination, authentication, authorization, order lifecycle management, and a simulated payment service. It also requires refactoring the project into a clean, modular structure.
 
- Apply pagination after search and category filtering
- Return response in the format:
+---
 
+## 🗂️ Project Structure
+
+Refactor your backend into the following structure:
+
+```
+src/
+├── routes/
+├── controllers/
+├── services/
+├── middleware/
+├── data/
+├── app.js
+├── server.js
+```
+
+---
+
+## 🛒 Products API Improvements
+
+### Endpoint
+```
+GET /api/products
+```
+
+### Query Parameters
+
+| Param | Type   | Description           | Default |
+|------|--------|-----------------------|---------|
+| page | number | Page number (1-based) | 1       |
+| limit| number | Items per page        | 20      |
+
+### Response Format
+
+```json
 {
   "data": [],
   "page": 1,
@@ -86,103 +114,93 @@ limit
   "totalItems": 1000,
   "totalPages": 50
 }
- Provide default values for pagination params
- Handle invalid query params gracefully
+```
 
-- User & Auth Setup
+---
 
- Create in-memory users store
- Add POST /api/auth/register
- Hash passwords using bcrypt
- Add POST /api/auth/login
- Generate JWT on successful login
- Store JWT secret in .env
+## 👤 User & Authentication Setup
 
-Auth Middleware
+### Register
+```
+POST /api/auth/register
+```
 
- Create JWT authentication middleware
- Extract user from token
- Return 401 for invalid or missing token
+### Login
+```
+POST /api/auth/login
+```
 
-Route Protection
+- Passwords must be hashed using bcrypt
+- JWT must be generated on successful login
+- JWT secret must be stored in `.env`
 
- Protect POST /api/orders
- Protect POST /api/payments
+---
 
-- Order Status Management
+## 🔐 Authentication Middleware
 
- Add status field to orders:
+- Verify JWT
+- Attach user to request
+- Return 401 for invalid or missing token
 
-PROCESSING
-PAID
-SHIPPED
-DELIVERED
- Set default status on order creation
- Add endpoint:
+---
 
+## 🔒 Protected Routes
+
+- POST /api/orders
+- POST /api/payments
+
+---
+
+## 📦 Order Status Management
+
+Statuses:
+- PROCESSING (default)
+- PAID
+- SHIPPED
+- DELIVERED
+
+```
 PATCH /api/orders/:id/status
+```
 
- Validate allowed status transitions
- Prevent invalid status updates
-- implement a backend payment service (POST /api/payments)
-Request Body: {
-  "orderId": number,
-  "amount": number,
+---
+
+## 💳 Payment Service
+
+```
+POST /api/payments
+```
+
+```json
+{
+  "orderId": 1,
+  "amount": 500,
   "paymentMethod": "CARD"
 }
+```
 
-When a user places an order, they must complete a payment.
-A successful payment requires the following steps to be executed in order:
+Payment flow:
+1. Validate payment
+2. Charge provider (simulated async)
+3. Update order status to PAID
 
-Validate the payment request
-Charge the payment provider
-Update the order status to Paid
-Each step is asynchronous and may fail.
+---
 
-Functional Requirements
-1️⃣ Validate Payment
+## ❌ Error Handling
 
-Check if the order exists
-Ensure the order is not already paid
-Ensure the amount is greater than 0
-Reject invalid requests
+- Invalid requests
+- Order not found
+- Order already paid
+- Payment gateway failure
 
-2️⃣ Charge Payment Provider
+Return proper HTTP status codes and error messages.
 
-Simulate an external payment gateway
-Introduce a delay (e.g. using setTimeout)
-Return a mock transactionId
+---
 
-3️⃣ Update Order Status
+## 📋 Logging
 
-Update the order status from Processing → Paid
-Persist the change in memory
-Error Handling Requirements
+Log all API requests with method, route, and timestamp using the Logger created earlier.
 
-Your API must handle the following cases:
-
-Invalid or missing request fields
-Order not found
-Order already paid
-Payment gateway failure
-
-All errors should:
-Return appropriate HTTP status codes
-Include a clear error message
-
-- Use Logger (created in assignment 1) to log all api requests with their timestamps
--  Refactor backend into:
-
-src/
-
-├── routes/
-
-├── controllers/
-
-├── services/
-
-├── middleware/
-
-├── data/
+---
 
 Happy coding! 🚀
