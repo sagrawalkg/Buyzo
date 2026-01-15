@@ -174,10 +174,15 @@ Include a clear error message
 -  Refactor backend into:
 
 src/
+
 ├── routes/
+
 ├── controllers/
+
 ├── services/
+
 ├── middleware/
+
 ├── data/
 
 Happy coding! 🚀
