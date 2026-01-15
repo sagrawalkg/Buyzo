@@ -124,4 +124,60 @@ PATCH /api/orders/:id/status
 
  Validate allowed status transitions
  Prevent invalid status updates
+- implement a backend payment service (POST /api/payments)
+Request Body: {
+  "orderId": number,
+  "amount": number,
+  "paymentMethod": "CARD"
+}
+
+When a user places an order, they must complete a payment.
+A successful payment requires the following steps to be executed in order:
+
+Validate the payment request
+Charge the payment provider
+Update the order status to Paid
+Each step is asynchronous and may fail.
+
+Functional Requirements
+1️⃣ Validate Payment
+
+Check if the order exists
+Ensure the order is not already paid
+Ensure the amount is greater than 0
+Reject invalid requests
+
+2️⃣ Charge Payment Provider
+
+Simulate an external payment gateway
+Introduce a delay (e.g. using setTimeout)
+Return a mock transactionId
+
+3️⃣ Update Order Status
+
+Update the order status from Processing → Paid
+Persist the change in memory
+Error Handling Requirements
+
+Your API must handle the following cases:
+
+Invalid or missing request fields
+Order not found
+Order already paid
+Payment gateway failure
+
+All errors should:
+Return appropriate HTTP status codes
+Include a clear error message
+
+- Use Logger (created in assignment 1) to log all api requests with their timestamps
+-  Refactor backend into:
+
+src/
+├── routes/
+├── controllers/
+├── services/
+├── middleware/
+├── data/
+
 Happy coding! 🚀
