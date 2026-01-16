@@ -2,9 +2,6 @@
 
 Welcome to the Buyzo TypeScript assignment! This assignment is designed to test your understanding of TypeScript fundamentals and your ability to work with a real-world codebase.
 
-**Duration:** 3-4 hours
-**Prerequisites:** Basic JavaScript knowledge, familiarity with Node.js and React concepts
-
 ---
 
 ## Part 1: TypeScript Fundamentals (Theory)
